@@ -1,11 +1,20 @@
 type Template {
   id: ID! @unique
   name: String!
-  type: String!
+  type: TemplateType!
   markup: String!
+  interfacePlaceholders: String!
   createdAt: DateTime!
   updatedAt: DateTime!  
   createdBy: User
+}
+
+enum TemplateType {
+  Banner
+  InApp
+  Dashboard
+  Popup
+  BigInAppPopup
 }
 
 type User {

@@ -52,8 +52,18 @@ function createTemplate(parent, args, context, info) {
 
 }
 
+function deleteTemplate(parent, args, context, info) {
+    const userId = getUserId(context);
+    return context.db.mutation.deleteTemplate({
+        where: {
+            id: args.id,
+        }
+    }, info)
+
+}
 module.exports = {
     login,
     signup,
-    createTemplate
+    createTemplate,
+    deleteTemplate
 }
