@@ -1,0 +1,17 @@
+type Template {
+  id: ID! @unique
+  name: String!
+  type: String!
+  markup: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!  
+  createdBy: User
+}
+
+type User {
+    id: ID! @unique
+    name: String!
+    email: String! @unique
+    password: String!
+    templates: [Template!]!
+}
