@@ -8,7 +8,7 @@
 type Template implements Node {
   id: ID!
   name: String!
-  type: String!
+  type: TemplateType!
   markup: String!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -142,7 +142,7 @@ type TemplateConnection {
 
 input TemplateCreateInput {
   name: String!
-  type: String!
+  type: TemplateType!
   markup: String!
   createdBy: UserCreateOneWithoutTemplatesInput
 }
@@ -154,7 +154,7 @@ input TemplateCreateManyWithoutCreatedByInput {
 
 input TemplateCreateWithoutCreatedByInput {
   name: String!
-  type: String!
+  type: TemplateType!
   markup: String!
 }
 
@@ -190,7 +190,7 @@ enum TemplateOrderByInput {
 type TemplatePreviousValues {
   id: ID!
   name: String!
-  type: String!
+  type: TemplateType!
   markup: String!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -235,9 +235,17 @@ input TemplateSubscriptionWhereInput {
   node: TemplateWhereInput
 }
 
+enum TemplateType {
+  Banner
+  InApp
+  Dashboard
+  Popup
+  BigInAppPopup
+}
+
 input TemplateUpdateInput {
   name: String
-  type: String
+  type: TemplateType
   markup: String
   createdBy: UserUpdateOneWithoutTemplatesInput
 }
@@ -253,7 +261,7 @@ input TemplateUpdateManyWithoutCreatedByInput {
 
 input TemplateUpdateWithoutCreatedByDataInput {
   name: String
-  type: String
+  type: TemplateType
   markup: String
 }
 
@@ -387,59 +395,19 @@ input TemplateWhereInput {
   All values not ending with the given string.
   """
   name_not_ends_with: String
-  type: String
+  type: TemplateType
   """
   All values that are not equal to given value.
   """
-  type_not: String
+  type_not: TemplateType
   """
   All values that are contained in given list.
   """
-  type_in: [String!]
+  type_in: [TemplateType!]
   """
   All values that are not contained in given list.
   """
-  type_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  type_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  type_lte: String
-  """
-  All values greater than the given value.
-  """
-  type_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  type_gte: String
-  """
-  All values containing the given string.
-  """
-  type_contains: String
-  """
-  All values not containing the given string.
-  """
-  type_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  type_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  type_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  type_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  type_not_ends_with: String
+  type_not_in: [TemplateType!]
   markup: String
   """
   All values that are not equal to given value.
