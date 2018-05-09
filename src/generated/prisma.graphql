@@ -5,6 +5,11 @@
 # Model Types
 #
 
+type Notification implements Node {
+  id: ID!
+  name: String!
+}
+
 type Template implements Node {
   id: ID!
   name: String!
@@ -28,6 +33,10 @@ type User implements Node {
 #
 # Other Types
 #
+
+type AggregateNotification {
+  count: Int!
+}
 
 type AggregateTemplate {
   count: Int!
@@ -54,16 +63,22 @@ scalar Long
 
 type Mutation {
   createTemplate(data: TemplateCreateInput!): Template!
+  createNotification(data: NotificationCreateInput!): Notification!
   createUser(data: UserCreateInput!): User!
   updateTemplate(data: TemplateUpdateInput!, where: TemplateWhereUniqueInput!): Template
+  updateNotification(data: NotificationUpdateInput!, where: NotificationWhereUniqueInput!): Notification
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteTemplate(where: TemplateWhereUniqueInput!): Template
+  deleteNotification(where: NotificationWhereUniqueInput!): Notification
   deleteUser(where: UserWhereUniqueInput!): User
   upsertTemplate(where: TemplateWhereUniqueInput!, create: TemplateCreateInput!, update: TemplateUpdateInput!): Template!
+  upsertNotification(where: NotificationWhereUniqueInput!, create: NotificationCreateInput!, update: NotificationUpdateInput!): Notification!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyTemplates(data: TemplateUpdateInput!, where: TemplateWhereInput): BatchPayload!
+  updateManyNotifications(data: NotificationUpdateInput!, where: NotificationWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   deleteManyTemplates(where: TemplateWhereInput): BatchPayload!
+  deleteManyNotifications(where: NotificationWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
@@ -81,6 +96,223 @@ interface Node {
   The id of the object.
   """
   id: ID!
+}
+
+"""
+A connection to a list of items.
+"""
+type NotificationConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
+  edges: [NotificationEdge]!
+  aggregate: AggregateNotification!
+}
+
+input NotificationCreateInput {
+  name: String!
+}
+
+"""
+An edge in a connection.
+"""
+type NotificationEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: Notification!
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+enum NotificationOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type NotificationPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type NotificationSubscriptionPayload {
+  mutation: MutationType!
+  node: Notification
+  updatedFields: [String!]
+  previousValues: NotificationPreviousValues
+}
+
+input NotificationSubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [NotificationSubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [NotificationSubscriptionWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [NotificationSubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: NotificationWhereInput
+}
+
+input NotificationUpdateInput {
+  name: String
+}
+
+input NotificationWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [NotificationWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [NotificationWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [NotificationWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  name: String
+  """
+  All values that are not equal to given value.
+  """
+  name_not: String
+  """
+  All values that are contained in given list.
+  """
+  name_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  name_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  name_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  name_lte: String
+  """
+  All values greater than the given value.
+  """
+  name_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  name_gte: String
+  """
+  All values containing the given string.
+  """
+  name_contains: String
+  """
+  All values not containing the given string.
+  """
+  name_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  name_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  name_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  name_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  name_not_ends_with: String
+}
+
+input NotificationWhereUniqueInput {
+  id: ID
 }
 
 """
@@ -107,10 +339,13 @@ type PageInfo {
 
 type Query {
   templates(where: TemplateWhereInput, orderBy: TemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Template]!
+  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   template(where: TemplateWhereUniqueInput!): Template
+  notification(where: NotificationWhereUniqueInput!): Notification
   user(where: UserWhereUniqueInput!): User
   templatesConnection(where: TemplateWhereInput, orderBy: TemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TemplateConnection!
+  notificationsConnection(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NotificationConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   """
   Fetches an object given its ID
@@ -123,6 +358,7 @@ type Query {
 
 type Subscription {
   template(where: TemplateSubscriptionWhereInput): TemplateSubscriptionPayload
+  notification(where: NotificationSubscriptionWhereInput): NotificationSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 

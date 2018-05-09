@@ -9,6 +9,12 @@ type Template {
   createdBy: User
 }
 
+type Notification {
+  id: ID! @unique
+  name: String!
+}
+
+
 enum TemplateType {
   Banner
   InApp

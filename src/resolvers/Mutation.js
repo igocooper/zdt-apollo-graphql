@@ -46,6 +46,7 @@ function createTemplate(parent, args, context, info) {
             name: args.name,
             type: args.type,
             markup: args.markup,
+            interfacePlaceholders: args.interfacePlaceholders,
             createdBy: { connect: {id: userId } },
         }
     }, info)
